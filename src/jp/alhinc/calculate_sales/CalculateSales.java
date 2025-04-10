@@ -52,11 +52,25 @@ public class CalculateSales {
 		}
 
 		for(int i = 0; i < rcdFiles.size(); i++) {
-			/*long fileSale = Long.parseLong(売上⾦額);
-			Long saleAmount = 売上⾦額を⼊れたMap.get(⽀店コード) + long に変換した売上⾦額;
-*/
-		}
 
+			BufferedReader br = null;
+			//読込
+			File file = new File(args[0],rcdFiles.get(i).getName());
+			FileReader fr = new FileReader(file);
+			br = new BufferedReader(fr);
+			String line;
+
+			List<String> list = new ArrayList<>();
+			while((line = br.readLine()) != null) {
+				 list.add(line);
+			}
+
+			//読込後、型変換
+			long fileSale = Long.parseLong(list.get(1));
+
+			//型変換後、売上金額を加算
+			Long saleAmount = branchSales.get(0) + fileSale;
+		}
 
 
 
@@ -65,9 +79,7 @@ public class CalculateSales {
 
 		// 支店別集計ファイル書き込み処理
 		if(!writeFile(args[0], FILE_NAME_BRANCH_OUT, branchNames, branchSales)) {
-		return;
-
-		}
+		return; {
 }
 
 	/**
