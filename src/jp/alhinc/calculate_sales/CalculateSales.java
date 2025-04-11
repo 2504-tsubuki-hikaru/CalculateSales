@@ -45,12 +45,12 @@ public class CalculateSales {
 
 		List<File> rcdFiles = new ArrayList<>();
 
-			for(int i = 0; i < files.length ;  i++) {
-				//「^…先頭」「[0-9]の間の数字は通す」「{8}」桁数を指定　「.…任意の1文字」「rcd…rcdという文字列」「$…末尾」
-				if(files[i].getName().matches("^[0-9]{8}[.]rcd$")) {
-				rcdFiles.add(files[i]);
-				}
+		for(int i = 0; i < files.length ;  i++) {
+			//「^…先頭」「[0-9]の間の数字は通す」「{8}」桁数を指定　「.…任意の1文字」「rcd…rcdという文字列」「$…末尾」
+			if(files[i].getName().matches("^[0-9]{8}[.]rcd$")) {
+			rcdFiles.add(files[i]);
 			}
+		}
 
 		for(int i = 0; i < rcdFiles.size(); i++) {
 
@@ -82,10 +82,10 @@ public class CalculateSales {
 				//branchSalesマップに格納
 				branchSales.put(fileContents.get(0), saleAmount);
 
-			} catch(IOException e){
+			} catch(IOException e) {
 				System.out.println(UNKNOWN_ERROR);
 				return;
-			}finally{
+			} finally {
 				// ファイルを開いている場合
 				if (br != null) {
 					try {
@@ -133,10 +133,10 @@ public class CalculateSales {
 				branchNames.put(items[0], items[1] );
 				branchSales.put(items[0],  0L);
 			}
-		}catch(IOException e){
+		} catch(IOException e) {
 			System.out.println(UNKNOWN_ERROR);
 			return false;
-		}finally{
+		} finally {
 			// ファイルを開いている場合
 			if (br != null) {
 				try {
@@ -182,10 +182,10 @@ public class CalculateSales {
 				bw.newLine();
 			}
 
-		}catch(IOException e){
+		} catch(IOException e) {
 			System.out.println(UNKNOWN_ERROR);
 			return false;
-		}finally{
+		} finally {
 		// ファイルを開いている場合
 			if (bw != null) {
 				try {
