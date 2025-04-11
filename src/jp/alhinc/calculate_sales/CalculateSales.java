@@ -45,10 +45,10 @@ public class CalculateSales {
 
 		List<File> rcdFiles = new ArrayList<>();
 
-		for(int i = 0; i < files.length ;  i++) {
+		for(int i = 0; i < files.length ; i++) {
 			//「^…先頭」「[0-9]の間の数字は通す」「{8}」桁数を指定　「.…任意の1文字」「rcd…rcdという文字列」「$…末尾」
 			if(files[i].getName().matches("^[0-9]{8}[.]rcd$")) {
-			rcdFiles.add(files[i]);
+				rcdFiles.add(files[i]);
 			}
 		}
 
@@ -67,7 +67,7 @@ public class CalculateSales {
 				List<String> fileContents = new ArrayList<>();
 
 				//売上ファイルを１行ずつ読み込む　１行目…支店コード　２行目…売上金額
-					while((line = br.readLine()) != null) {
+				while((line = br.readLine()) != null) {
 
 					//読んだ行(１行目だったり２行目)を、リスト「list」にaddしている
 					fileContents.add(line);
@@ -197,6 +197,6 @@ public class CalculateSales {
 				}
 			}
 		}
-	return true;
+		return true;
 	}
 }
