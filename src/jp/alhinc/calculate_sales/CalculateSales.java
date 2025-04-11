@@ -45,42 +45,43 @@ public class CalculateSales {
 
 		List<File> rcdFiles = new ArrayList<>();
 
-		for(int i = 0; i < files.length ;  i++) {
-
-			if(files[i].getName().matches("^[0-9]{8}.rcd$")) {
+			for(int i = 0; i < files.length ;  i++) {
+				//「^…先頭」「[0-9]の間の数字は通す」「{8}」桁数を指定　「.…任意の1文字」「rcd…rcdという文字列」「$…末尾」
+				if(files[i].getName().matches("^[0-9]{8}[.]rcd$")) {
 				rcdFiles.add(files[i]);
-
+				}
 			}
-		}
 
 		for(int i = 0; i < rcdFiles.size(); i++) {
 
 			BufferedReader br = null;
-			//読込
 
+			//読込
 			try {
 				File file = new File(args[0],rcdFiles.get(i).getName());
 				FileReader fr = new FileReader(file);
 				br = new BufferedReader(fr);
 				String line;
 
-				List<String> list = new ArrayList<>();
+				//ファイルの中身(読み込んだもの)を格納するための変数：fileContents
+				List<String> fileContents = new ArrayList<>();
 
 				//売上ファイルを１行ずつ読み込む　１行目…支店コード　２行目…売上金額
-				while((line = br.readLine()) != null) {
+					while((line = br.readLine()) != null) {
 
 					//読んだ行(１行目だったり２行目)を、リスト「list」にaddしている
-					 list.add(line);
+					fileContents.add(line);
 				}
 
 				//読込後、型変換
-				long fileSale = Long.parseLong(list.get(1));
+				long fileSale = Long.parseLong(fileContents.get(1));
 
 				//型変換後、売上金額を加算
-				Long saleAmount = branchSales.get(list.get(0)) + fileSale;
+				Long saleAmount = branchSales.get(fileContents.get(0)) + fileSale;
 
 				//branchSalesマップに格納
-				branchSales.put(list.get(0), saleAmount);
+				branchSales.put(fileContents.get(0), saleAmount);
+
 			} catch(IOException e){
 				System.out.println(UNKNOWN_ERROR);
 				return;
@@ -96,16 +97,14 @@ public class CalculateSales {
 					}
 				}
 			}
-
-
 		}
-
 
 		// 支店別集計ファイル書き込み処理
 		if(!writeFile(args[0], FILE_NAME_BRANCH_OUT, branchNames, branchSales)) {
 			return;
 		}
 	}
+
 
 	/**
 	 * 支店定義ファイル読み込み処理
@@ -118,6 +117,7 @@ public class CalculateSales {
 	 */
 	private static boolean readFile(String path, String fileName, Map<String, String> branchNames, Map<String, Long> branchSales) {
 		BufferedReader br = null;
+
 		//ファイル読込処理
 		try {
 			File file = new File(path, fileName);
@@ -132,7 +132,6 @@ public class CalculateSales {
 
 				branchNames.put(items[0], items[1] );
 				branchSales.put(items[0],  0L);
-
 			}
 		}catch(IOException e){
 			System.out.println(UNKNOWN_ERROR);
